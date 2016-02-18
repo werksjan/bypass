@@ -261,6 +261,7 @@ NSString *const BPLinkStyleAttributeName = @"NSLinkAttributeName";
     [paragraphStyle setFirstLineHeadIndent:[_displaySettings quoteIndentation]];
     [paragraphStyle setHeadIndent:[_displaySettings quoteIndentation]];
     [paragraphStyle setTailIndent:-[_displaySettings quoteIndentation]];
+	[paragraphStyle setAlignment:_displaySettings.textAlignment];
     attributes[NSParagraphStyleAttributeName] = paragraphStyle;
     
     [target addAttributes:attributes range:effectiveRange];
@@ -279,6 +280,7 @@ NSString *const BPLinkStyleAttributeName = @"NSLinkAttributeName";
     [paragraphStyle setFirstLineHeadIndent:[_displaySettings codeIndentation]];
     [paragraphStyle setHeadIndent:[_displaySettings codeIndentation]];
     [paragraphStyle setTailIndent:-[_displaySettings codeIndentation]];
+	[paragraphStyle setAlignment:_displaySettings.textAlignment];
     attributes[NSParagraphStyleAttributeName] = paragraphStyle;
     
     [target addAttributes:attributes range:effectiveRange];
@@ -293,6 +295,7 @@ NSString *const BPLinkStyleAttributeName = @"NSLinkAttributeName";
     [paragraphStyle setParagraphSpacing:[_displaySettings paragraphSpacing]];
     [paragraphStyle setLineSpacing:[_displaySettings paragraphLineSpacing]];
     [paragraphStyle setFirstLineHeadIndent:[_displaySettings paragraphFirstLineHeadIndent]];
+	[paragraphStyle setAlignment:_displaySettings.textAlignment];
 
     if(!self.renderedFirstParagraph) {
         [paragraphStyle setFirstLineHeadIndent:[_displaySettings firstParagraphFirstLineHeadIndent]];
@@ -310,12 +313,12 @@ NSString *const BPLinkStyleAttributeName = @"NSLinkAttributeName";
 {
     NSUInteger level = 0;
     BPElement *inspectedElement = [[element parentElement] parentElement];
-    NSMutableString *indentation = [NSMutableString  string];
+	//NSMutableString *indentation = [NSMutableString  string];
     
     while ([inspectedElement elementType] == BPList
            || [inspectedElement elementType] == BPListItem) {
         if ([inspectedElement elementType] == BPList) {
-            [indentation appendString:@"\t"];
+					//[indentation appendString:@"\u200B"];
             ++level;
         }
         
@@ -349,6 +352,10 @@ NSString *const BPLinkStyleAttributeName = @"NSLinkAttributeName";
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:[_displaySettings lineSpacingSmall]];
+	[paragraphStyle setAlignment:_displaySettings.textAlignment];
+	[paragraphStyle setHeadIndent:24*(level)+14];
+	[paragraphStyle setFirstLineHeadIndent:24*(level)];
+
     
     NSDictionary *indentationAttributes = @{
         NSFontAttributeName : [UIFont systemFontOfSize:[_displaySettings bulletIndentation]],
@@ -356,7 +363,7 @@ NSString *const BPLinkStyleAttributeName = @"NSLinkAttributeName";
     };
     
     NSAttributedString *attributedIndentation;
-    attributedIndentation = [[NSAttributedString alloc] initWithString:indentation
+    attributedIndentation = [[NSAttributedString alloc] initWithString:@"\u200B"
                                                             attributes:indentationAttributes];
     [target insertAttributedString:attributedIndentation atIndex:effectiveRange.location];
 
@@ -376,6 +383,7 @@ NSString *const BPLinkStyleAttributeName = @"NSLinkAttributeName";
     [paragraphStyle setLineSpacing:[_displaySettings paragraphLineSpacingHeading]];
     [paragraphStyle setFirstLineHeadIndent:[_displaySettings headerFirstLineHeadIndent]];
     [paragraphStyle setHeadIndent:[_displaySettings headerHeadIndent]];
+	[paragraphStyle setAlignment:_displaySettings.textAlignment];
     attributes[NSParagraphStyleAttributeName] = paragraphStyle;
     
     // Override font weight and size attributes (but preserve all other attributes)

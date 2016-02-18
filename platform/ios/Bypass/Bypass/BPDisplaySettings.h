@@ -51,4 +51,6 @@
 @property(nonatomic) CGFloat headerFirstLineHeadIndent;
 @property(nonatomic) CGFloat headerHeadIndent;
 
+@property(nonatomic) NSTextAlignment textAlignment;
+
 @end
