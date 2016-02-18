@@ -51,6 +51,8 @@
 @property(nonatomic) CGFloat headerFirstLineHeadIndent;
 @property(nonatomic) CGFloat headerHeadIndent;
 
+// used to add text alignment to blocks if 'Natural' is not right (e.g. the text is known to be right-to-left
+// on a left-to-right device.)
 @property(nonatomic) NSTextAlignment textAlignment;
 
 @end
