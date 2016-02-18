@@ -44,6 +44,7 @@
 
     self.paragraphLineSpacing = 1.2f;
     self.paragraphLineSpacingHeading = 1.2f;
+		self.textAlignment = NSTextAlignmentNatural;
 
   }
   return self;
